@@ -1,0 +1,55 @@
+html, body {
+    height: 100%;
+}
+
+.webpage-center {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    background: #1f1f1fe1;
+    padding: 20px 30px 40px;
+}
+
+.input-label {
+    font-size: 16pt;
+}
+
+.input-button {
+    width: 130px;
+}
+
+.input-box {
+    background: #1f1f1fc9;
+    border: 0.5px solid darkorange;
+    transition: ease-in-out 0.4s;
+    color: white;
+}
+
+.input-box:hover {
+    background: #111110;
+}
+
+input:focus {
+    outline: none;
+}
+
+/* Button Styling */
+.input-button {
+    background: #000000;;
+    color: #ffffff;
+    border: 0.5px solid darkorange;
+    transition: ease-out .4s;
+}
+
+.input-button:hover {
+    border: 0.5px solid darkorange;
+    color: #000000;
+    background: #ffffff;
+}
+
+.input-button:focus {
+    outline: none;
+}

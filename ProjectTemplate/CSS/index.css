@@ -1,0 +1,13 @@
+.login-background {
+    height: 100%;
+    background-image: url(./Pictures/forest.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#login-title {
+    background: none;
+    color: white;
+    font-size: 24pt;
+} 
