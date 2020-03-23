@@ -30,5 +30,13 @@ button {
 }
 
 #create-button {
-    margin-left: 35%;
+    margin-left: 165px;
+}
+
+#userType-input-container {
+    padding-top: 10px;
+}
+
+#userPick {
+    font-size: large;
 }

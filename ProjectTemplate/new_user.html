@@ -16,7 +16,7 @@
             <h1 id='new-account-header'>New Account</h1>
             <div class="form-group" id="name-input-container">
                 <label class="control-label col-sm-2 user-label-input" for="name">Name</label>
-                <input type="email" class="form-control input-box" id="name" placeholder="Enter name" autocomplete="off">
+                <input type="email" class="form-control input-box" id="name" placeholder="Enter name" autocomplete="off" autofocus>
             </div>
 
             <div class="form-group" id="email-input-container">
@@ -40,19 +40,19 @@
                     <option value="ecn" id="newuser-focus-econmics">Economics</option>
                     <option value="mkt" id="newuser-focus-marketing">Marketing</option>
                     <option value="cis" id="newuser-focus-is">Information Systems</option>
-                    <option value="default" id="default-focus-value" selected>(Select A Focus)</option>
+                    <option value="default" id="default-focus-value" disabled hidden selected>(Select an option)</option>
                 </select>
             </div>
 
-            <label class="control-label col-sm-2 user-label-input" for="focus">Mentor or Mentee</label>
-
+            
+            <label class="label col-sm-2 user-label-input" for="focus" id='userPick'>Account Type</label><br>
             <div id="userType-input-container">
-                <div class="checkbox-inline">
+                <div class="radio">
                     <label class="form-check-label userType-newUser" for="radio1">
-                        <input type="radio" class="form-check-input user-radio" id="newUserMentor" name="ment" value=1 onclick="buttonChoice()" checked>Mentor
+                        <input type="radio" class="form-check-input user-radio" id="newUserMentor" name="ment" value=1 onclick="buttonChoice()">Mentor
                     </label>
                 </div>
-                <div class="checkbox-inline">
+                <div class="radio">
                     <label class="form-check-label userType-newUser" for="radio2">
                         <input type="radio" class="form-check-input user-radio" id="newUserMentee" name="ment" value=2 onclick="buttonChoice()">Mentee
                     </label>
