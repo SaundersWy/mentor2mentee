@@ -10,4 +10,16 @@
     background: none;
     color: white;
     font-size: 24pt;
-} 
+}
+
+.userType-newUser {
+    color: white;
+}
+
+button {
+    margin-top: 15px;
+}
+
+#create-button {
+    margin-left: 35%;
+}

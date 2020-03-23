@@ -13,6 +13,7 @@
 
     <div id="userForm" class="webpage-center">
         <form>
+            <h1 id='new-account-header'>New Account</h1>
             <div class="form-group" id="name-input-container">
                 <label class="control-label col-sm-2 user-label-input" for="name">Name</label>
                 <input type="email" class="form-control input-box" id="name" placeholder="Enter name" autocomplete="off">
@@ -48,12 +49,12 @@
             <div id="userType-input-container">
                 <div class="checkbox-inline">
                     <label class="form-check-label userType-newUser" for="radio1">
-                    <input type="radio" class="form-check-input user-radio" id="newUserMentor" name="mentor" value=1 checked>Mentor
+                        <input type="radio" class="form-check-input user-radio" id="newUserMentor" name="ment" value=1 onclick="buttonChoice()" checked>Mentor
                     </label>
                 </div>
                 <div class="checkbox-inline">
                     <label class="form-check-label userType-newUser" for="radio2">
-                    <input type="radio" class="form-check-input user-radio" id="newUserMentee" name="mentee" value=2 >Mentee
+                        <input type="radio" class="form-check-input user-radio" id="newUserMentee" name="ment" value=2 onclick="buttonChoice()">Mentee
                     </label>
                 </div>
             </div>
@@ -70,5 +71,25 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script>
+
+    function buttonChoice() {
+        mentorButton = document.getElementById('newUserMentor');
+        menteeButton = document.getElementById('newUserMentee');
+
+        if (mentorButton.checked) {
+            mentorButton.checked = true;
+            menteeButton.checked = false;
+        }
+
+        else {
+            mentorButton.checked = false;
+            menteeButton.checked = true;
+        }
+
+    }
+
+</script>
 
 </html>
