@@ -1,3 +1,11 @@
+body {
+    height: 100%;
+    background-image: url(./Pictures/forest.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .webpage-center {
     width: 500px;
     padding: 45px;
@@ -6,4 +14,12 @@
 .user-label-input {
     color: white;
     width: 150px;
+}
+
+.userType-newUser {
+    color: white;
+}
+
+#create-button {
+    margin-top: 15px;
 }

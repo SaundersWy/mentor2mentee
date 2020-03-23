@@ -33,6 +33,35 @@
                 <input type="password" class="form-control" id="rePassword" placeholder="Re-enter password" autocomplete="off">
             </div>
 
+            <div class="form-group" id="focus-input-container">
+                <label class="control-label col-sm-2 user-label-input" for="focus">Skill Focus</label>
+                <select class="form-control" id="focus-selection">
+                    <option value="ecn" id="newuser-focus-econmics">Economics</option>
+                    <option value="mkt" id="newuser-focus-marketing">Marketing</option>
+                    <option value="cis" id="newuser-focus-is">Information Systems</option>
+                    <option value="default" id="default-focus-value" selected>(Select A Focus)</option>
+                </select>
+            </div>
+
+            <label class="control-label col-sm-2 user-label-input" for="focus">Mentor or Mentee</label>
+
+            <div id="userType-input-container">
+                <div class="checkbox-inline">
+                    <label class="form-check-label userType-newUser" for="radio1">
+                    <input type="radio" class="form-check-input user-radio" id="newUserMentor" name="mentor" value=1 checked>Mentor
+                    </label>
+                </div>
+                <div class="checkbox-inline">
+                    <label class="form-check-label userType-newUser" for="radio2">
+                    <input type="radio" class="form-check-input user-radio" id="newUserMentee" name="mentee" value=2 >Mentee
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group" id="button-input-container">
+                <button type="button" class="btn btn-default input-button" id="create-button">Create Account</button>
+            </div>
+
         </form>
     </div>
 
