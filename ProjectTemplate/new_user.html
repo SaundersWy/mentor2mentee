@@ -12,84 +12,206 @@
 <body>
 
     <div id="userForm" class="webpage-center">
-        <form>
+        <form method="POST">
             <h1 id='new-account-header'>New Account</h1>
             <div class="form-group" id="name-input-container">
-                <label class="control-label col-sm-2 user-label-input" for="name">Name</label>
-                <input type="email" class="form-control input-box" id="name" placeholder="Enter name" autocomplete="off" autofocus>
+                <label class="control-label col-sm-2 user-label-input" for="username">Name</label>
+                <input type="text" class="form-control input-box" id="name" placeholder="Enter name" autocomplete="off" autofocus required onclick="resetBorder(this)">
             </div>
 
             <div class="form-group" id="email-input-container">
-                <label class="control-label col-sm-2 user-label-input" for="email">Email</label>
-                <input type="email" class="form-control input-box" id="email" placeholder="Enter email" autocomplete="off">
+                <label class="control-label col-sm-2 user-label-input" for="emailLabel">Email</label>
+                <input type="email" class="form-control input-box" id="email" placeholder="Enter email" autocomplete="off" required onclick="resetBorder(this)">
             </div>
 
             <div class="form-group" id="password-input-container">
                 <label class="control-label col-sm-2 user-label-input" for="pwd">Password</label>
-                <input type="password" class="form-control input-box" id="password" placeholder="Enter password" autocomplete="off">
+                <input type="password" class="form-control input-box" id="password" placeholder="Enter password" autocomplete="off" required onclick="resetBorder(this)">
             </div>
 
             <div class="form-group" id="rePassword-input-container">
                 <label class="control-label col-sm-2 user-label-input" for="pwd">Re-Password</label>
-                <input type="password" class="form-control input-box" id="rePassword" placeholder="Re-enter password" autocomplete="off">
+                <input type="password" class="form-control input-box" id="rePassword" placeholder="Re-enter password" autocomplete="off" required onclick="resetBorder(this)">
             </div>
 
             <div class="form-group" id="focus-input-container">
                 <label class="control-label col-sm-2 user-label-input" for="focus">Skill Focus</label>
-                <select class="form-control input-box" id="focus-selection">
-                    <option value="ecn" id="newuser-focus-econmics">Economics</option>
-                    <option value="mkt" id="newuser-focus-marketing">Marketing</option>
-                    <option value="cis" id="newuser-focus-is">Information Systems</option>
-                    <option value="default" id="default-focus-value" disabled hidden selected>(Select an option)</option>
+                <select class="form-control input-box" id="focus-selection" required onclick="resetBorder(this)">
+                    <option value="Economics" id="newuser-focus-econmics">Economics</option>
+                    <option value="Marketing" id="newuser-focus-marketing">Marketing</option>
+                    <option value="Information Systems" id="newuser-focus-is">Information Systems</option>
+                    <option value="" id="default-focus-value" disabled hidden selected>(Select an option)</option>
                 </select>
             </div>
 
             
             <label class="label col-sm-2 user-label-input" for="focus" id='userPick'>Account Type</label><br>
-            <div id="userType-input-container">
+            <div id="userType-input-container" id='user-label'>
                 <div class="radio">
-                    <label class="form-check-label userType-newUser" for="radio1">
-                        <input type="radio" class="form-check-input user-radio" id="newUserMentor" name="ment" value=1 onclick="buttonChoice()">Mentor
+                    <label class="form-check-label userType-newUser" for="radio1" >
+                        <input type="radio" class="form-check-input user-radio" id="newUserMentor" name="typeOfUser" value='mentor' required>Mentor
                     </label>
                 </div>
                 <div class="radio">
                     <label class="form-check-label userType-newUser" for="radio2">
-                        <input type="radio" class="form-check-input user-radio" id="newUserMentee" name="ment" value=2 onclick="buttonChoice()">Mentee
+                        <input type="radio" class="form-check-input user-radio" id="newUserMentee" name="typeOfUser" value='mentee' required>Mentee
                     </label>
                 </div>
             </div>
 
             <div class="form-group" id="button-input-container">
                 <button type="button" class="btn btn-default input-button" id="back-button"  onclick="window.location.href='./index.html'">Back</button>
-                <button type="button" class="btn btn-default input-button" id="create-button">Create Account</button>
+                <button type="button" class="btn btn-default input-button" id="create-button" onclick="databaseInsert(this.form)">Create Account</button>
             </div>
-
         </form>
     </div>
 
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://mysqljs.com/mysql.js" type="text/javascript"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <script>
 
-    function buttonChoice() {
-        mentorButton = document.getElementById('newUserMentor');
-        menteeButton = document.getElementById('newUserMentee');
+        var username;
+        var email;
+        var password;
+        var repassword;
+        var skill;
+        var userTypeList;
+        var userType = '';
 
-        if (mentorButton.checked) {
-            mentorButton.checked = true;
-            menteeButton.checked = false;
+    function validateForm(form) {
+        username = document.getElementById('name');
+        email = document.getElementById('email');
+        password = document.getElementById('password');
+        repassword = document.getElementById('rePassword');
+        skill = document.getElementById('focus-selection');
+        userTypeList = document.getElementsByName('typeOfUser');
+
+        for (i=0; i < userTypeList.length; i++) {
+            if(userTypeList[i].checked) {
+                userType = userTypeList[i].value;
+                console.log(userType);
+            }
+        }
+
+        console.log(username.value, email.value, password.value, repassword.value, skill.value);
+        console.log(form.checkValidity());
+
+        if(form.checkValidity()) {
+
+            if (password.value != repassword.value) {
+                password.value = '';
+                repassword.value = '';
+
+                password.style = "border: 2px solid red";
+                repassword.style = "border: 2px solid red";
+
+                window.alert('Password did not match.');
+            }
+
+            else if (skill.value === '') {
+                skill.style = "border: 2px solid red";
+
+                window.alert('Please choose a Skill Focus.');
+            }
+
+            else {
+                return true;
+            }   
+
         }
 
         else {
-            mentorButton.checked = false;
-            menteeButton.checked = true;
+
+            if (username.value == '') {
+                username.style = "border: 2px solid red";
+            }
+
+            if (password.value == '') {
+                password.style = "border: 2px solid red";
+            }
+
+            if (repassword.value == '') {
+                repassword.style = "border: 2px solid red";
+            }
+
+            if (skill.value == '') {
+                skill.style = "border: 2px solid red";
+            }
+ 
+            email.style = "border: 2px solid red";
+            window.alert('Fill all fields out correctly!');
+
+            return false;
+        }
+    }
+
+    function runStmt() {
+
+        var sqlStmt = '';
+
+        if (userType === 'mentor') {
+            sqlStmt = "INSERT INTO Mentors (mentorName, mentorEmail, mentorPassword, mentorSkill, mentorStartDate) VALUES ";
+        }
+
+        else if (userType === 'mentee') {
+            sqlStmt = "INSERT INTO Mentees (menteeName, menteeEmail, menteePassword, menteeSkill, menteeStartDate) VALUES ";
+        }
+
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        var date = yyyy + '-' + mm + '-' + dd;
+        
+        userValues = "('" + username.value + "', '" + email.value + "', '" + password.value + "', '" + skill.value + "', '" + date + "');";
+        
+        sqlStmt = sqlStmt + userValues;
+
+        console.log(sqlStmt);
+
+        MySql.Execute(
+            "107.180.1.16",
+            "group7-2",
+            "!!Group7",
+            "group7-2",
+            sqlStmt,
+            function (data, error) {
+                if (error) {throw error;}
+                else {
+                    console.log('data inserted');
+                }
+
+            });
+    };
+
+    function databaseInsert(form) {
+
+        if(validateForm(form)) {
+            runStmt();
+
+            window.alert('Account Created!')
+
+            setTimeout(function() { 
+                window.location.href='./index.html'; },1000);
+        }
+
+        else {
+            console.log('Invalid Form');
         }
 
     }
 
+    
+    function resetBorder(element) {
+
+        element.style= "border: 0.5px solid darkorange;"
+        element.style = "color: white;"
+
+    }
 </script>
 
 </html>
