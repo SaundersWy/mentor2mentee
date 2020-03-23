@@ -20,6 +20,10 @@ body {
     color: white;
 }
 
-#create-button {
+button {
     margin-top: 15px;
+}
+
+#create-button {
+    margin-left: 35%;
 }
