@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./CSS/generalStyle.css">
+    <link rel="stylesheet" href="./CSS/new_user.css">
+    <meta charset="utf-8" />
+    <title>Home Page</title>
+</head>
+<body>
+    <div>
+        <h1>Mentee Information</h1>
+        <p id="id"></p>
+        <p id="name"></p>
+        <p id="email"></p>
+        <p id="password"></p>
+        <p id="skill"></p>
+        <p id="date"></p>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://mysqljs.com/mysql.js" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        var globalU = localStorage.getItem('key');
+
+        window.onload = function() {
+            var sqlStmt = "SELECT * FROM Mentees ";
+            var whereClause = "where menteeEmail = " + "'" + String(globalU) + "'";
+            sqlStmt = sqlStmt + whereClause;
+
+            MySql.Execute(
+                "107.180.1.16",
+                "group7-2",
+                "!!Group7",
+                "group7-2",
+                sqlStmt,
+                function (data) {
+                    var info = data['Result'][0];
+
+                    var menteeID = info['menteeID'];
+                    var menteeName = info['menteeName'];
+                    var menteeEmail = info['menteeEmail'];
+                    var menteePassword = info['menteePassword'];
+                    var menteeSkill = info['menteeSkill'];
+                    var menteeStartDate = info['menteeStartDate'];
+                    var menteeID = info['menteeID'];
+
+                    document.getElementById("id").innerHTML = menteeID;
+                    document.getElementById("name").innerHTML = menteeName;
+                    document.getElementById("email").innerHTML = menteeEmail;
+                    document.getElementById("password").innerHTML = menteePassword;
+                    document.getElementById("skill").innerHTML = menteeSkill;
+                    document.getElementById("date").innerHTML = menteeStartDate;
+                }
+            );
+        };
+    </script>
+</body>
+</html>
