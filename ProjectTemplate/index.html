@@ -26,8 +26,7 @@
                 function (data) {
                     if (data['Result'].length === 0) {
                         alert("Wrong Email or Password");
-                    }
-                    else if{
+                    }else{
                         console.log(data)
                         localStorage.setItem('key', email);
                         window.location = "menteeHome.html"
