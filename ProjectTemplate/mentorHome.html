@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+
+        .col-1     {width: 		  8.33%; }
+	    .col-2     {width: 		 16.66%; }
+	    .col-3     {width: 		 25.00%; }
+	    .col-4     {width: 		 33.33%; }
+	    .col-5     {width: 		 41.66%; }
+	    .col-6     {width: 		 50.00%; }
+	    .col-7     {width: 		 58.33%; }
+	    .col-8     {width: 		 66.66%; }
+	    .col-9     {width: 		 75.00%; }
+	    .col-10    {width: 		 83.33%; }
+	    .col-11    {width: 		 91.66%; }
+	    .col-12    {width: 		100.00%; }
+
+        [class*="col-"] {
+            border: 2px solid black;
+            float: left;
+            border-radius: 10px;
+        }
+
+		.row::after {
+			content: 			"";
+			clear: 				both;
+			display: 			block;
+		}
+
+        #pictureFrame {
+            display: flex;
+            max-width: 20vw;
+            max-height: 24vh;
+            vertical-align: middle;
+            border-radius: 50%;
+            background-color: grey;
+            padding-left: 4em;
+        }
+
+        .header h1{
+            margin: 0 55% 0 45%;
+        }
+
+        #signOut{
+            display: block;
+            float: left;
+
+        }
+        h3{
+            display: block;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="col-12 header">
+            <h1>Mentor2Mentee</h1>
+            <h3>Welcome Back: Mentor Name</h3>
+            <h3 id="signOut">Sign Out</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div id="pictureFrame"><img src="./CSS/Pictures/question_mark.png"/></div>
+            <button type="button">Upload Photo</button>
+        </div>
+        <div class="col-9">
+            <h2>Mentor Checklist</h2>
+            <ul>
+                <li>Task 1</li>
+                <li>Task 2</li>
+                <li>Task 3</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <p>Mentee Name 1</p>
+            <label for="progressBar">Mentee Progress:</label>
+            <progress id="progressBar" value="50" max="100"></progress>
+        </div>
+        <div class="col-6">
+            <p>Mentee Name 2</p>
+            <label for="progressBar2">Mentee Progress:</label>
+            <progress id="progressBar2" value="50" max="100"></progress>
+        </div>
+    </div>
+</body>
+</html>
