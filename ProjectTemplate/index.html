@@ -15,7 +15,10 @@
             var pass = document.getElementById("pwd").value;
             var sqlStmt = "SELECT * FROM Mentees ";
             var whereClause = "where menteeEmail = " + "'" + String(email) + "'" + " AND menteePassword = " + "'" + String(pass) + "'";
+            var sqlStmt2 = "SELECT * FROM Mentors ";
+            var whereClause2 = "where mentorEmail = " + "'" + String(email) + "'" + " AND mentorPassword = " + "'" + String(pass) + "'";
             sqlStmt = sqlStmt + whereClause;
+            sqlStmt2 = sqlStmt2 + whereClause2;
 
             MySql.Execute(
                 "107.180.1.16",
@@ -24,8 +27,26 @@
                 "group7-2",
                 sqlStmt,
                 function (data) {
+                    var info = data['Result'][0]
                     if (data['Result'].length === 0) {
-                        alert("Wrong Email or Password");
+                        //alert("Wrong Email or Password");
+                        MySql.Execute(
+                            "107.180.1.16",
+                            "group7-2",
+                            "!!Group7",
+                            "group7-2",
+                            sqlStmt2,
+                            function (data) {
+                                if (data['Result'].length === 0) {
+                                    alert("Wrong Email or Password");
+                                }
+                                else{
+                                    console.log("Mentor Login")
+                                }
+                            }
+                        );
+                    }else if(info['mentorID'] === 0){
+                        console.log("New Mentee")
                     }else{
                         console.log(data)
                         localStorage.setItem('key', email);
@@ -35,7 +56,7 @@
                 }
             );
         };
-    
+        
     </script>
     <!--END OF YOUR OWN JAVASCRIPT-->
 
