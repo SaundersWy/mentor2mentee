@@ -5,9 +5,43 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mentor</title>
+    <script>
+        window.addEventListener('load', function() {
+            document.querySelector('input[type="file"]').addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    var img = document.querySelector('img'); 
+                    img.src = URL.createObjectURL(this.files[0]); // set src to blob url
+                    img.onload = imageIsLoaded;
+                }
+            });
+        });
+
+        function imageIsLoaded() { 
+            alert("Profile Picture Changed");  // blob url
+            document.getElementById("profilePicture").width = '250'
+            document.getElementById("profilePicture").height = '250'
+            // update width and height ...
+        }
+    </script>
     <style>
         *{
             box-sizing: border-box;
+            font-family: serif;
+            color: white;
+            
+        }
+
+        body{
+            height: 100%;
+            margin: 0;
+        }
+
+        .background-image {
+            height: 100%;
+            background-image: url(./CSS/Pictures/forest.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
         .col-1     {width: 		  8.33%; }
@@ -24,9 +58,9 @@
 	    .col-12    {width: 		100.00%; }
 
         [class*="col-"] {
-            border: 2px solid black;
+            border: 1px ;
             float: left;
-            border-radius: 10px;
+            
         }
 
 		.row::after {
@@ -35,18 +69,29 @@
 			display: 			block;
 		}
 
-        #pictureFrame {
+        #pictureFrame{
+            padding: 2%;
+            padding-top: 8%;
+            padding-left: 8%;
+            
+        }
+        #profilePicture {
             display: flex;
             max-width: 20vw;
             max-height: 24vh;
             vertical-align: middle;
             border-radius: 50%;
             background-color: grey;
-            padding-left: 4em;
+           
+        }
+
+        .header {
+            border-bottom: 5px solid black;
         }
 
         .header h1{
-            margin: 0 55% 0 45%;
+            font-size: 6vh;
+            text-align: center;
         }
 
         #signOut{
@@ -54,45 +99,116 @@
             float: left;
 
         }
+
         h3{
+            padding-left: 2em;
             display: block;
         }
 
+        .menteeProgress{
+            border-top: 5px solid black;
+            padding-left: 1em;
+            font-size: 4vh ;
+            height: 36.5vh;
+        }
+
+        .recentActivity{
+            border-left: 5px solid black;
+            height: 38.3vh;
+        }
+            .recentActivity h2{
+                text-align: center;
+                font-size: 4vh;
+            }
+       
+
+        input[type="file"] {
+            
+            display: none;
+        }
+        .fileUpload {
+            margin-left: 20%;
+            padding: 2%;
+            display: inline-block;
+            cursor: pointer;
+            background: #000000;
+            color: #ffffff;
+            border: 0.5px solid darkorange;
+            transition: ease-out .4s;
+            
+        }
+            .fileUpload:hover {
+                border: 0.5px solid darkorange;
+                color: #000000;
+                background: #ffffff;
+            }
+            .fileUpload:focus{
+                outline: none;
+            }
+
+        .feedbackTable{
+            border-radius: 15px 15px 15px 15px;
+            background-color: grey;
+            width: 80%;
+            height: 50%;
+            margin-left: 13%;
+            border: 2px solid black;
+            overflow:auto;
+        }
+        td{
+            text-align: center;
+            border: 2px solid black;
+        }
 
     </style>
 </head>
 <body>
-    <div class="row">
-        <div class="col-12 header">
-            <h1>Mentor2Mentee</h1>
-            <h3>Welcome Back: Mentor Name</h3>
-            <h3 id="signOut">Sign Out</h3>
+    <div class="background-image">
+        <div class="row">
+            <div class="col-12 header">
+                <h1>Mentor2Mentee</h1>
+                <h3>Welcome Back: Mentor Name</h3>
+                <h3 id="signOut">Sign Out</h3>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-3">
-            <div id="pictureFrame"><img src="./CSS/Pictures/question_mark.png"/></div>
-            <button type="button">Upload Photo</button>
+        <div class="row">
+            <div class="col-3">
+                <div id="pictureFrame"><img id="profilePicture" src="./CSS/Pictures/question_mark.png" /></div>
+                <label class="fileUpload">
+                    <input type="file" />Upload Photo
+                </label>
+            </div>
+            <div class="col-9 recentActivity">
+                <h2>Recent Activity</h2>
+                
+                <table class="feedbackTable">
+                    <tr>
+                        <th>Mentee</th>
+                        <th>Task Completed</th>
+                    </tr>
+                    <tr>
+                        <td>Mentee 1</td>
+                        <td>Task 1</td>
+                    </tr>
+                    <tr>
+                        <td>Mentee 2</td>
+                        <td>Task 2</td>
+                    </tr>
+                </table>
+                
+            </div>
         </div>
-        <div class="col-9">
-            <h2>Mentor Checklist</h2>
-            <ul>
-                <li>Task 1</li>
-                <li>Task 2</li>
-                <li>Task 3</li>
-            </ul>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <p>Mentee Name 1</p>
-            <label for="progressBar">Mentee Progress:</label>
-            <progress id="progressBar" value="50" max="100"></progress>
-        </div>
-        <div class="col-6">
-            <p>Mentee Name 2</p>
-            <label for="progressBar2">Mentee Progress:</label>
-            <progress id="progressBar2" value="50" max="100"></progress>
+        <div class="row">
+            <div class="col-6 menteeProgress">
+                <p>Mentee Name 1</p>
+                <label for="progressBar">Mentee Progress:</label>
+                <progress id="progressBar" value="50" max="100"></progress>
+            </div>
+            <div class="col-6 menteeProgress">
+                <p>Mentee Name 2</p>
+                <label for="progressBar2">Mentee Progress:</label>
+                <progress id="progressBar2" value="30" max="100"></progress>
+            </div>
         </div>
     </div>
 </body>
