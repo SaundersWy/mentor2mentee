@@ -54,10 +54,21 @@ button {
 }
 
 #table th {
-    font-size: 14pt;
+    font-size: 16pt;
 
 }
 
 #table tr:not(:first-child):hover {
     background: black;
+}
+
+h2{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+#table {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    font-size: 14pt;
 }
