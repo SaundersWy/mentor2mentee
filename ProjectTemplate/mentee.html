@@ -4,25 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mentor</title>
-    <script>
-        window.addEventListener('load', function() {
-            document.querySelector('input[type="file"]').addEventListener('change', function() {
-                if (this.files && this.files[0]) {
-                    var img = document.querySelector('img'); 
-                    img.src = URL.createObjectURL(this.files[0]); // set src to blob url
-                    img.onload = imageIsLoaded;
-                }
-            });
-        });
-
-        function imageIsLoaded() { 
-            alert("Profile Picture Changed");  // blob url
-            document.getElementById("profilePicture").width = '250'
-            document.getElementById("profilePicture").height = '250'
-            // update width and height ...
-        }
-    </script>
+    <title id='menteePage'>Mentee</title>
+    
     <style>
         *{
             box-sizing: border-box;
@@ -207,5 +190,30 @@
             
         </div>
     </div>
+
+    <script>
+
+        window.addEventListener('load', function() {
+            document.querySelector('input[type="file"]').addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    var img = document.querySelector('img'); 
+                    img.src = URL.createObjectURL(this.files[0]); // set src to blob url
+                    img.onload = imageIsLoaded;
+                }
+            });
+        });
+
+        function imageIsLoaded() { 
+            alert("Profile Picture Changed");  // blob url
+            document.getElementById("profilePicture").width = '250'
+            document.getElementById("profilePicture").height = '250'
+            // update width and height ...
+        }
+
+        function onload() {
+            // document.getElementById('menteePage').innerHTML = 
+        }
+    </script>
+
 </body>
 </html>

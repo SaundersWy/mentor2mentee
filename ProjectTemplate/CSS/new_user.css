@@ -40,3 +40,24 @@ button {
 #userPick {
     font-size: large;
 }
+
+#result h2 {
+    background-color: rgb(148, 148, 148);
+    padding: 0;
+    margin: 0;;
+    text-align: center;
+}
+
+#result #table {
+    background-color: rgb(100, 100, 100);
+
+}
+
+#table th {
+    font-size: 14pt;
+
+}
+
+#table tr:not(:first-child):hover {
+    background: black;
+}
