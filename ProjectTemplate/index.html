@@ -41,6 +41,7 @@
                                     alert("Wrong Email or Password");
                                 }
                                 else{
+                                    localStorage.setItem('key', email);
                                     window.location = "mentorHome.html"
                                 }
                             }
@@ -48,7 +49,7 @@
                     }else if(info['mentorID'] === 0){
                         console.log("New Mentee");
                         localStorage.setItem('key', email);
-                        window.location = "menteeHome.html"
+                        window.location = "mentorSelect.html"
                     }else{
                         console.log(data)
                         localStorage.setItem('key', email);

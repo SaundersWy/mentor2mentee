@@ -145,7 +145,7 @@
 
     </style>
 </head>
-<body>
+<body onload="onload()">
     <div class="background-image">
         <div class="row">
             <div class="col-12 header">
@@ -193,6 +193,10 @@
 
     <script>
 
+        mentee = localStorage.getItem('key');
+        console.log(String(mentee))
+        
+
         window.addEventListener('load', function() {
             document.querySelector('input[type="file"]').addEventListener('change', function() {
                 if (this.files && this.files[0]) {
@@ -211,7 +215,7 @@
         }
 
         function onload() {
-            // document.getElementById('menteePage').innerHTML = 
+            document.getElementById('menteePage').innerHTML = mentee;
         }
     </script>
 
