@@ -46,16 +46,38 @@
                             }
                         );
                     }else if(info['mentorID'] === 0){
-                        console.log("New Mentee")
+                        console.log("New Mentee");
+                        localStorage.setItem('key', email);
+                        window.location = "menteeHome.html"
                     }else{
                         console.log(data)
                         localStorage.setItem('key', email);
-                        window.location = "menteeHome.html"
+                        window.location = "mentee.html"
                     }
 
                 }
             );
         };
+
+        function onload() {
+            var password = document.getElementById("pwd");
+            var email = document.getElementById("email");
+
+            password.addEventListener("keyup", function(event) {
+                if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("login-button").click();
+                }
+            });
+
+            email.addEventListener("keyup", function(event) {
+                if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("login-button").click();
+                }
+            });
+        }
+        
         
     </script>
     <!--END OF YOUR OWN JAVASCRIPT-->
@@ -66,7 +88,7 @@
 
 </head>
 
-<body>
+<body onload="onload()">
 
     <div class="login-background" id="login-container">
         <div class="webpage-center">
