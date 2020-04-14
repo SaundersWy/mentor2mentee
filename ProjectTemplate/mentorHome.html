@@ -147,6 +147,24 @@
             color: black;
         }
 
+        #emailSelector{
+            color:black;
+            display:inline-block;
+            float: none;
+            font-size: 2vh;
+            margin-left: 70vw;
+            margin-top: 2vh;
+            
+        }
+        option{
+            color: black;
+        }
+        #sendButton{
+            font-size: 2vh;
+            
+        }
+        
+
     </style>
 </head>
 <body onload="onload()">
@@ -155,7 +173,14 @@
             <div class="col-12 header">
                 <h1>Mentor2Mentee</h1>
                 <h3>Welcome Back: Mentor Name</h3>
-                <h3 id="signOut">Sign Out</h3>
+                <h3 id="signOut"><a href="index.html">Sign Out</a></h3>
+                <select id="emailSelector">
+                    <option value="mailto:breynolds@gmail.com">Burt Reynolds</option>
+                    <option value="mailto:billgates@gmail.com">Bill Gates</option>
+                    <option value="mailto:smitha@gmail.com">Adam Smith</option>
+
+                </select>
+                <a id="sendButton" href="javascript:sendMail()">Send Email to Mentor</a>
             </div>
         </div>
         <div class="row">
@@ -208,6 +233,12 @@ window.addEventListener('load', function() {
         }
     });
 });
+
+function sendMail(){
+    var emailTo = document.getElementById('emailSelector').value;
+
+    window.location.href = "mailto:" + emailTo;
+}
 
 function imageIsLoaded() { 
     alert("Profile Picture Changed");  // blob url
