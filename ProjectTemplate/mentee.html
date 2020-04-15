@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id='menteePage'>Mentee</title>
+    <title id='menteePage'>Home Page</title>
     
     <style>
         *{
@@ -143,6 +143,23 @@
             border: 2px solid black;
         }
 
+        .darkbg {
+            background: rgb(30, 30, 30, 0.65);
+        }
+
+        #tasks-header {
+            font-size: 26pt;
+        }
+        
+        #task-list {
+            font-size: 20pt;
+            padding-left: 20px;
+        }
+
+        #task-list label {
+            margin-left: 10px;
+        }
+
     </style>
 </head>
 <body onload="onload()" class="background-image">
@@ -150,11 +167,11 @@
         <div class="row">
             <div class="col-12 header">
                 <h1>Mentor2Mentee</h1>
-                <h3>Welcome Back: Mentee Name</h3>
+                <h3 id='welcome-user-heading'></h3>
                 <h3 id="signOut">Sign Out</h3>
             </div>
         </div>
-        <div class="row">
+        <div class="row darkbg">
             <div class="col-3">
                 <div id="pictureFrame"><img id="profilePicture" src="./CSS/Pictures/question_mark.png" /></div>
                 <label class="fileUpload">
@@ -162,62 +179,297 @@
                 </label>
             </div>
             <div class="col-9 recentActivity">
-                <h2>Recent Activity</h2>
+                <h2 id='tasks-header'>Tasks to Complete</h2>
                 
-                <table class="feedbackTable">
-                    <tr>
-                        <th>Activity</th>
-                        <th> Completed</th>
-                    </tr>
-                    <tr>
-                        <td>Activity 1</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Activity 2</td>
-                        <td>No</td>
-                    </tr>
-                </table>
+                <div id="task-list" >
+                    <div class="checkbox">
+                        <input type="checkbox" value="1" id='tcheck1' onchange="checkOff(this.id, 1)"><label id='task1'>Option 1</label>
+                    </div>
+                    <div class="checkbox">
+                        <input type="checkbox" value="1" id='tcheck2' onchange="checkOff(this.id, 2)"><label id='task2'>Option 2</label>
+                    </div>
+                    <div class="checkbox">
+                        <input type="checkbox" value="1" id='tcheck3' onchange="checkOff(this.id, 3)"><label id='task3'>Option 3</label>
+                    </div>
+                    <div class="checkbox">
+                        <input type="checkbox" value="1" id='tcheck4' onchange="checkOff(this.id, 4)"><label id='task4'>Option 4</label>
+                    </div>
+                    <div class="checkbox">
+                        <input type="checkbox" value="1" id='tcheck5' onchange="checkOff(this.id, 5)"><label id='task5'>Option 5</label>
+                    </div>
+                </div>
                 
             </div>
         </div>
-        <div class="row">
+        <div class="row darkbg">
             <div class="col-12 menteeProgress">
-                <p> Activity 1</p>
-                <label for="progressBar">Activity Progress:</label>
-                <progress id="progressBar" value="50" max="100"></progress>
             </div>
             
         </div>
     </div>
 
-    <script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://mysqljs.com/mysql.js" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-        mentee = localStorage.getItem('key');
-        console.log(String(mentee))
-        
+<script>
 
-        window.addEventListener('load', function() {
-            document.querySelector('input[type="file"]').addEventListener('change', function() {
-                if (this.files && this.files[0]) {
-                    var img = document.querySelector('img'); 
-                    img.src = URL.createObjectURL(this.files[0]); // set src to blob url
-                    img.onload = imageIsLoaded;
+gUser = localStorage.getItem('key');
+console.log(String(gUser))
+
+
+window.addEventListener('load', function() {
+    document.querySelector('input[type="file"]').addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            var img = document.querySelector('img'); 
+            img.src = URL.createObjectURL(this.files[0]); // set src to blob url
+            img.onload = imageIsLoaded;
+        }
+    });
+});
+
+function imageIsLoaded() { 
+    alert("Profile Picture Changed");  // blob url
+    document.getElementById("profilePicture").width = '250'
+    document.getElementById("profilePicture").height = '250'
+    // update width and height ...
+}
+
+function onload() {
+    loadUser()
+}
+
+function loadUser() {
+    var gUser = localStorage.getItem('key');
+    var sqlStmt = 'SELECT * FROM Mentees ';
+    var whereClause = "WHERE menteeEmail = '" + gUser + "';";
+    var queryStmt = sqlStmt + whereClause;
+
+    // Checkbox labels
+    var task1 = document.getElementById('task1');
+    var task2 = document.getElementById('task2');
+    var task3 = document.getElementById('task3');
+    var task4 = document.getElementById('task4');
+    var task5 = document.getElementById('task5');
+    var totalTasks = [task1, task2, task3, task4, task5];
+
+    // Checkboxes for responsive coding
+    var check1 = document.getElementById('tcheck1');
+    var check2 = document.getElementById('tcheck2');
+    var check3 = document.getElementById('tcheck3');
+    var check4 = document.getElementById('tcheck4');
+    var check5 = document.getElementById('tcheck5');
+    var totalChecks = [check1, check2, check3, check4, check5];
+    
+
+    MySql.Execute(
+        "107.180.1.16",
+        "group7-2",
+        "!!Group7",
+        "group7-2",
+        queryStmt,
+        function(data) {
+            console.log(data);
+
+            document.getElementById('welcome-user-heading').innerHTML = 'Welcome back ' + data['Result'][0].menteeName + '!!!';
+            
+            // Setting checkbox labels to specific task for skill
+            var tnum1 = data['Result'][0].task1;
+            var tnum2 = data['Result'][0].task2;
+            var tnum3 = data['Result'][0].task3;
+            var tnum4 = data['Result'][0].task4;
+            var tnum5 = data['Result'][0].task5;
+
+            var tnums = [tnum1, tnum2, tnum3, tnum4, tnum5];
+
+            console.log(tnums);
+
+            if (data['Result'][0].menteeSkill == 'Marketing') {
+                console.log('Marketing Major');
+
+                task1.innerHTML = 'Use data to make decisions'
+                task2.innerHTML = 'Deliver specific, identifiable results'
+                task3.innerHTML = 'Create remarkable customer experiences'
+                task4.innerHTML = 'Know your customer and markets'
+                task5.innerHTML = 'Analyze a certain demographic and create a promotion for a popular product'
+
+            }
+
+            else if (data['Result'][0].menteeSkill == 'Economics') {
+                console.log('Economics Major');
+
+                task1.innerHTML = 'Be able to interpret and forecast market trends'
+                task2.innerHTML = 'Research and analyze economic issues'
+                task3.innerHTML = 'Conduct surverys and collect data'
+                task4.innerHTML = 'Be able to advise businesses and individuals on economic topics'
+                task5.innerHTML = 'Make recommendations for solving economic problems'
+
+            }
+
+            else if (data['Result'][0].menteeSkill == 'Information Systems') {
+                console.log('CIS Major');
+
+                task1.innerHTML = 'Be able to write multiple coding languages'
+                task2.innerHTML = 'Analyze needs and requirements when designing products'
+                task3.innerHTML = 'Judge the costs and benefits of a possible action'
+                task4.innerHTML = 'Choose a mathematical method or formula to solve problems'
+                task5.innerHTML = 'Understand new information or materials by studying and working with them'
+
+            }
+
+            else {
+                console.log('No Skill??? Error somewhere in the DB....');
+            }
+
+
+            // Checks task boxes depending on if they were checked off previously
+            for (i=0; i < tnums.length; i++) {
+                    if (tnums[i] == 1) {
+                        totalChecks[i].checked = true;
+                    }
+                    else if (tnums[i] == 0) {
+                        totalChecks[i] = false;
+                    }
+                    
                 }
-            });
-        });
-
-        function imageIsLoaded() { 
-            alert("Profile Picture Changed");  // blob url
-            document.getElementById("profilePicture").width = '250'
-            document.getElementById("profilePicture").height = '250'
-            // update width and height ...
         }
+    )
+}
 
-        function onload() {
-            document.getElementById('menteePage').innerHTML = mentee;
+
+
+function checkOff(tcheckID, tasknum) {
+
+    var seeIfChecked = document.getElementById(tcheckID);
+    console.log(seeIfChecked.checked);
+
+    if (seeIfChecked.checked) {
+        updtStmt = "UPDATE Mentees SET task" + tasknum + " = 1 WHERE menteeEmail = '" + gUser + "';";
+
+        // Inserts into completed Task Log
+        MySql.Execute(
+        "107.180.1.16",
+        "group7-2",
+        "!!Group7",
+        "group7-2",
+        updtStmt,
+        function (data) {
+            console.log('Updated')
+
+            var getUser = "SELECT * FROM Mentees "
+            var join = "JOIN Mentors on Mentors.mentorID = Mentees.menteeID "
+            var whereClaus = "WHERE menteeEmail = '" + gUser + "';";
+            var finalStmt = getUser + join + whereClaus
+
+            MySql.Execute(
+                "107.180.1.16",
+                "group7-2",
+                "!!Group7",
+                "group7-2",
+                finalStmt,
+                function (data) {
+                    console.log(data);
+
+                    var insertMenteeName = data['Result'][0].menteeName;
+                    var insertMentorEmail = data['Result'][0].mentorEmail;
+
+                    var insertStmt = 'INSERT INTO CompletedTasks (Date, Time, Name, MentorEmail, Description) Values ';
+                    var insertValues = "(CURRENT_DATE(), CURRENT_TIME(), '" + insertMenteeName + "', '" + insertMentorEmail + "', 'Completed Task: " + tasknum + "');";
+                    finalStmt = insertStmt + insertValues;
+                    console.log(finalStmt);
+
+                    MySql.Execute(
+                        "107.180.1.16",
+                        "group7-2",
+                        "!!Group7",
+                        "group7-2",
+                        finalStmt,
+                        function (data) {
+                            console.log('Inserted');
+
+                            // var insertMenteeName = data['Result'][0].menteeName;
+                            // var insertMentorEmail = data['Result'][0].mentorEmail;
+
+                            // var insertStmt = 'INSERT INTO CompletedTasks (Date, Time, Name, MentorEmail, Description) Values ';
+                            // var insertValues = "(CURRENT_DATE(), CURRENT_TIME(), '" + insertMenteeName + "', '" + insertMentorEmail + "', 'Completed Task: " + tasknum + "');";
+                            // finalStmt = insertStmt + insertValues;
+                            // console.log(finalStmt);
+
+                            // MySql.Execute(
+                            //     "107.180.1.16",
+                            //     "group7-2",
+                            //     "!!Group7",
+                            //     "group7-2",
+                            //     finalStmt,
+                            //     function (data) {
+                            //         console.log('Deleted');
+                            //     })
+                        }
+                    );
+                }
+            );
         }
-    </script>
+    );
+
+    }
+
+    else if (!seeIfChecked.checked) {
+        updtStmt = "UPDATE Mentees SET task" + tasknum + " = 0 WHERE menteeEmail = '" + gUser + "';";
+
+        MySql.Execute(
+        "107.180.1.16",
+        "group7-2",
+        "!!Group7",
+        "group7-2",
+        updtStmt,
+        function (data) {
+            console.log('Updated')
+
+            var getUser = "SELECT * FROM Mentees "
+            var join = "JOIN Mentors on Mentors.mentorID = Mentees.menteeID "
+            var whereClaus = "WHERE menteeEmail = '" + gUser + "';";
+            var finalStmt = getUser + join + whereClaus
+
+            // Deletes record from task log when deselected
+            MySql.Execute(
+                "107.180.1.16",
+                "group7-2",
+                "!!Group7",
+                "group7-2",
+                finalStmt,
+                function (data) {
+                    console.log(data);
+
+                    var insertMenteeName = data['Result'][0].menteeName;
+                    var insertMentorEmail = data['Result'][0].mentorEmail;
+
+                    var deleteStmt = 'DELETE FROM CompletedTasks WHERE ';
+                    var deleteValues = "Name = '" + insertMenteeName + "' AND MentorEmail = '" + insertMentorEmail + "' AND DESCRIPTION LIKE ('%" + tasknum + "%');";
+                    finalStmt = deleteStmt + deleteValues;
+                    console.log(finalStmt);
+
+                    MySql.Execute(
+                        "107.180.1.16",
+                        "group7-2",
+                        "!!Group7",
+                        "group7-2",
+                        finalStmt,
+                        function (data) {
+                            console.log('Deleted');
+                        })
+                }
+            );
+        }
+    );
+
+    }
+
+    console.log(updtStmt);
+
+
+    
+}
+</script>
 
 </body>
 </html>
