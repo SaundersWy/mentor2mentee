@@ -217,6 +217,12 @@
 gUser = localStorage.getItem('key');
 console.log(String(gUser))
 
+var tasknum1 = '';
+var tasknum2 = '';
+var tasknum3 = '';
+var tasknum4 = '';
+var tasknum5 = '';
+
 
 window.addEventListener('load', function() {
     document.querySelector('input[type="file"]').addEventListener('change', function() {
@@ -236,6 +242,8 @@ function imageIsLoaded() {
 }
 
 function onload() {
+
+
     loadUser()
 }
 
@@ -246,12 +254,13 @@ function loadUser() {
     var queryStmt = sqlStmt + whereClause;
 
     // Checkbox labels
-    var task1 = document.getElementById('task1');
-    var task2 = document.getElementById('task2');
-    var task3 = document.getElementById('task3');
-    var task4 = document.getElementById('task4');
-    var task5 = document.getElementById('task5');
     var totalTasks = [task1, task2, task3, task4, task5];
+
+    tasknum1 = document.getElementById('task1');
+    tasknum2 = document.getElementById('task2');
+    tasknum3 = document.getElementById('task3');
+    tasknum4 = document.getElementById('task4');
+    tasknum5 = document.getElementById('task5');
 
     // Checkboxes for responsive coding
     var check1 = document.getElementById('tcheck1');
@@ -287,33 +296,33 @@ function loadUser() {
             if (data['Result'][0].menteeSkill == 'Marketing') {
                 console.log('Marketing Major');
 
-                task1.innerHTML = 'Use data to make decisions'
-                task2.innerHTML = 'Deliver specific, identifiable results'
-                task3.innerHTML = 'Create remarkable customer experiences'
-                task4.innerHTML = 'Know your customer and markets'
-                task5.innerHTML = 'Analyze a certain demographic and create a promotion for a popular product'
+                tasknum1.innerHTML = 'Use data to make decisions'
+                tasknum2.innerHTML = 'Deliver specific, identifiable results'
+                tasknum3.innerHTML = 'Create remarkable customer experiences'
+                tasknum4.innerHTML = 'Know your customer and markets'
+                tasknum5.innerHTML = 'Analyze a certain demographic and create a promotion for a popular product'
 
             }
 
             else if (data['Result'][0].menteeSkill == 'Economics') {
                 console.log('Economics Major');
 
-                task1.innerHTML = 'Be able to interpret and forecast market trends'
-                task2.innerHTML = 'Research and analyze economic issues'
-                task3.innerHTML = 'Conduct surverys and collect data'
-                task4.innerHTML = 'Be able to advise businesses and individuals on economic topics'
-                task5.innerHTML = 'Make recommendations for solving economic problems'
+                tasknum1.innerHTML = 'Be able to interpret and forecast market trends'
+                tasknum2.innerHTML = 'Research and analyze economic issues'
+                tasknum3.innerHTML = 'Conduct surverys and collect data'
+                tasknum4.innerHTML = 'Be able to advise businesses and individuals on economic topics'
+                tasknum5.innerHTML = 'Make recommendations for solving economic problems'
 
             }
 
             else if (data['Result'][0].menteeSkill == 'Information Systems') {
                 console.log('CIS Major');
 
-                task1.innerHTML = 'Be able to write multiple coding languages'
-                task2.innerHTML = 'Analyze needs and requirements when designing products'
-                task3.innerHTML = 'Judge the costs and benefits of a possible action'
-                task4.innerHTML = 'Choose a mathematical method or formula to solve problems'
-                task5.innerHTML = 'Understand new information or materials by studying and working with them'
+                tasknum1.innerHTML = 'Be able to write multiple coding languages'
+                tasknum2.innerHTML = 'Analyze needs and requirements when designing products'
+                tasknum3.innerHTML = 'Judge the costs and benefits of a possible action'
+                tasknum4.innerHTML = 'Choose a mathematical method or formula to solve problems'
+                tasknum5.innerHTML = 'Understand new information or materials by studying and working with them'
 
             }
 
@@ -372,9 +381,11 @@ function checkOff(tcheckID, tasknum) {
 
                     var insertMenteeName = data['Result'][0].menteeName;
                     var insertMentorEmail = data['Result'][0].mentorEmail;
+                    var insertTaskNum = 'task' + tasknum;
+                    var insertTask = document.getElementById(insertTaskNum).innerHTML;
 
                     var insertStmt = 'INSERT INTO CompletedTasks (Date, Time, Name, MentorEmail, Description) Values ';
-                    var insertValues = "(CURRENT_DATE(), CURRENT_TIME(), '" + insertMenteeName + "', '" + insertMentorEmail + "', 'Completed Task: " + tasknum + "');";
+                    var insertValues = "(CURRENT_DATE(), CURRENT_TIME(), '" + insertMenteeName + "', '" + insertMentorEmail + "', 'Completed Task: " + insertTask + "');";
                     finalStmt = insertStmt + insertValues;
                     console.log(finalStmt);
 
