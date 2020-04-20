@@ -123,7 +123,21 @@
             transition: ease-out .4s;
             
         }
-            .fileUpload:hover {
+        #leaveMentor {
+            display: inline-block;
+            cursor: pointer;
+            background: #000000;
+            color: #ffffff;
+            border: 0.5px solid darkorange;
+            transition: ease-out .4s;
+            width: 145px;
+            height: 50px;
+            margin: 0;
+            padding: 0;
+            margin-top: 20px;
+            font-size: 16pt;
+        }
+            .fileUpload:hover, #leaveMentor:hover {
                 border: 0.5px solid darkorange;
                 color: #000000;
                 background: #ffffff;
@@ -215,6 +229,7 @@
         </div>
         <div class="row darkbg">
             <div class="col-12 menteeProgress">
+                <button id="leaveMentor" onclick="leaveMentor()">Leave Mentor</button>
             </div>
             
         </div>
@@ -481,7 +496,8 @@ function checkOff(tcheckID, tasknum) {
                         finalStmt,
                         function (data) {
                             console.log('Deleted');
-                        })
+                        });
+                    
                 }
             );
         }
@@ -493,6 +509,33 @@ function checkOff(tcheckID, tasknum) {
 
 
     
+}
+
+function leaveMentor() {
+    var choice = confirm("Please confirm you want to leave this mentor.");
+
+    if (choice == true) {
+        updtStmt = "UPDATE Mentees SET task1 = 0, task2 = 0, task3 = 0, task4 = 0, task5 = 0, mentorID = 0 WHERE menteeEmail = '" + gUser + "';";
+        console.log(updtStmt);
+
+        MySql.Execute(
+            "107.180.1.16",
+            "group7-2",
+            "!!Group7",
+            "group7-2",
+            updtStmt,
+            function (data) {
+                console.log('Mentor removed');
+                console.log(data['Error']);
+                
+            });
+        window.location = "mentorSelect.html"
+    }
+
+    else {
+        console.log('Canceled');
+    }
+
 }
 </script>
 
