@@ -163,6 +163,28 @@
             font-size: 2vh;
             
         }
+
+        #menteeProgress1, #menteeProgress2 {
+            width: 50%;
+            background-color: #ddd;
+        }
+
+        #menteeBar1, #menteeBar2 {
+            width: 0%;
+            height: 30px;
+            background-color: rgb(54, 212, 59);
+            text-align: center;
+            line-height: 30px;
+            color: black;
+        }
+
+        .darkbg {
+            background: rgb(30, 30, 30, 0.65);
+        }
+
+        .lightbg {
+            background: rgb(75, 75, 75, 0.65);
+        }
         
 
     </style>
@@ -170,9 +192,9 @@
 <body onload="onload()">
     <div class="background-image">
         <div class="row">
-            <div class="col-12 header">
+            <div class="col-12 header darkbg">
                 <h1>Mentor2Mentee</h1>
-                <h3>Welcome Back: Mentor Name</h3>
+                <h3 id="welcomeMentor"></h3>
                 <h3 id="signOut"><a href="index.html">Sign Out</a></h3>
                 <select id="emailSelector">
                     <option value="mailto:breynolds@gmail.com">Burt Reynolds</option>
@@ -183,8 +205,8 @@
                 <a id="sendButton" href="javascript:sendMail()">Send Email to Mentor</a>
             </div>
         </div>
-        <div class="row">
-            <div class="col-3">
+        <div class="row lightbg">
+            <div class="col-3" >
                 <div id="pictureFrame"><img id="profilePicture" src="./CSS/Pictures/question_mark.png" /></div>
                 <label class="fileUpload">
                     <input type="file" />Upload Photo
@@ -193,7 +215,7 @@
             <div class="col-9 recentActivity">
                 <h2>Recent Activity</h2>
                 
-                <div id="activityLog" style="background-color: white; color: black;">
+                <div id="activityLog" style="background-color: white; color: black; overflow: scroll; height: 50%; width: 90%; margin: auto;">
                     <ul id='recentActivities'>
                     </ul>
 
@@ -201,16 +223,20 @@
                 
             </div>
         </div>
-        <div class="row">
+        <div class="row darkbg">
             <div class="col-6 menteeProgress">
                 <p id="name1">No Mentee Found</p>
                 <label for="progressBar">Mentee Progress:</label>
-                <progress id="progressBar" value="50" max="100"></progress>
+                <div id="menteeProgress1">
+                    <div id="menteeBar1">0%</div>
+                </div>
             </div>
             <div class="col-6 menteeProgress">
                 <p id="name2">No Mentee Found</p>
                 <label for="progressBar2">Mentee Progress:</label>
-                <progress id="progressBar2" value="30" max="100"></progress>
+                <div id="menteeProgress2">
+                    <div id="menteeBar2">0%</div>
+                </div>
             </div>
         </div>
     </div>
@@ -286,7 +312,7 @@ function onload() {
 
 
 function findMentee(id){
-    var sqlStmt = "SELECT menteeName FROM Mentees ";
+    var sqlStmt = "SELECT * FROM Mentees ";
     var whrStmt = "Where mentorID = '" + String(id) + "';"
     var sqlStmt = sqlStmt + whrStmt;
     MySql.Execute(
@@ -296,13 +322,56 @@ function findMentee(id){
         "group7-2",
         sqlStmt,
         function (data) {
+            var progessTotal;
             for (x=0; x < data['Result'].length; x++){
                 var info = data['Result'][x];
                 var mentee = info['menteeName'];
                 if ( x == 0){
                     document.getElementById("name1").innerHTML = mentee;
+                    //console.log(data['Result'][x]['task1'] + data['Result'][x]['task2'] + data['Result'][x]['task3'] + data['Result'][x]['task4'] + data['Result'][x]['task5'])
+
+                    var i = 0;
+                
+                    if (i == 0) {
+                        i = 1;
+                        var elem = document.getElementById("menteeBar1");
+                        var width = (data['Result'][x]['task1'] + data['Result'][x]['task2'] + data['Result'][x]['task3'] + data['Result'][x]['task4'] + data['Result'][x]['task5']) * 20;
+                        var counter = 0;
+                        var id = setInterval(frame, 10);
+                        function frame() {
+                            if (counter >= width) {
+                                clearInterval(id);
+                                i = 0;
+                            } else {
+                                counter++;
+                                elem.style.width = counter + "%";
+                                elem.innerHTML = counter  + "%";
+                            }
+                        }
+                    }
+                    
                  }else if(x == 1){
                     document.getElementById("name2").innerHTML = mentee;
+
+                    var i = 0;
+                
+                    if (i == 0) {
+                        i = 1;
+                        var elem = document.getElementById("menteeBar1");
+                        var width = (data['Result'][x]['task1'] + data['Result'][x]['task2'] + data['Result'][x]['task3'] + data['Result'][x]['task4'] + data['Result'][x]['task5']) * 20;
+                        var counter = 0;
+                        var id = setInterval(frame, 10);
+                        function frame() {
+                            if (counter >= width) {
+                                clearInterval(id);
+                                i = 0;
+                            } else {
+                                counter++;
+                                elem.style.width = counter + "%";
+                                elem.innerHTML = counter  + "%";
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -310,7 +379,7 @@ function findMentee(id){
 }
 
 function getMentorID(){
-    var sqlStmt = "SELECT mentorID FROM Mentors ";
+    var sqlStmt = "SELECT * FROM Mentors ";
     var whrStmt = "Where mentorEmail = '" + String(globalU) + "';"
     var sqlStmt = sqlStmt + whrStmt;
     MySql.Execute(
@@ -322,7 +391,9 @@ function getMentorID(){
         function (data) {
             var info = data['Result'][0];
             var mentorID = info['mentorID'];
-            findMentee(mentorID);            
+            findMentee(mentorID);         
+
+            document.getElementById('welcomeMentor').innerHTML = 'Welcome ' + data['Result'][0]['mentorName'] + "!";   
         }
     );
 

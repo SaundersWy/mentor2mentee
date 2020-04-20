@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id='menteePage'>Home Page</title>
+    <title id='menteePage'>Mentee</title>
     
     <style>
         * {
@@ -17,10 +17,13 @@
         body {
             height: 100%;
             margin: 0;
+            padding: 0;
         }
 
         .background-image {
             height: 100%;
+            margin: 0;
+            padding: 0;
             background-image: url(./CSS/Pictures/forest.jpg);
             background-position: center;
             background-repeat: no-repeat;
@@ -147,6 +150,11 @@
             background: rgb(30, 30, 30, 0.65);
         }
 
+        .lightbg {
+            background: rgb(75, 75, 75, 0.65);
+        }
+        
+
         #tasks-header {
             font-size: 26pt;
         }
@@ -162,9 +170,9 @@
 
     </style>
 </head>
-<body onload="onload()" class="background-image">
-    <div>
-        <div class="row">
+<body onload="onload()">
+    <div class="background-image">
+        <div class="row darkbg">
             <div class="col-12 header">
                 <h1>Mentor2Mentee</h1>
 
@@ -173,7 +181,7 @@
 
             </div>
         </div>
-        <div class="row darkbg">
+        <div class="row lightbg">
             <div class="col-3">
                 <div id="pictureFrame"><img id="profilePicture" src="./CSS/Pictures/question_mark.png" /></div>
                 <label class="fileUpload">
@@ -186,19 +194,19 @@
                 
                 <div id="task-list" >
                     <div class="checkbox">
-                        <input type="checkbox" value="1" id='tcheck1' onchange="checkOff(this.id, 1)"><label id='task1'>Option 1</label>
+                        <input type="checkbox" value="1" id='tcheck1' onchange="checkOff(this.id, 1)"><label id='task1'></label>
                     </div>
                     <div class="checkbox">
-                        <input type="checkbox" value="1" id='tcheck2' onchange="checkOff(this.id, 2)"><label id='task2'>Option 2</label>
+                        <input type="checkbox" value="1" id='tcheck2' onchange="checkOff(this.id, 2)"><label id='task2'></label>
                     </div>
                     <div class="checkbox">
-                        <input type="checkbox" value="1" id='tcheck3' onchange="checkOff(this.id, 3)"><label id='task3'>Option 3</label>
+                        <input type="checkbox" value="1" id='tcheck3' onchange="checkOff(this.id, 3)"><label id='task3'></label>
                     </div>
                     <div class="checkbox">
-                        <input type="checkbox" value="1" id='tcheck4' onchange="checkOff(this.id, 4)"><label id='task4'>Option 4</label>
+                        <input type="checkbox" value="1" id='tcheck4' onchange="checkOff(this.id, 4)"><label id='task4'></label>
                     </div>
                     <div class="checkbox">
-                        <input type="checkbox" value="1" id='tcheck5' onchange="checkOff(this.id, 5)"><label id='task5'>Option 5</label>
+                        <input type="checkbox" value="1" id='tcheck5' onchange="checkOff(this.id, 5)"><label id='task5'></label>
                     </div>
                 </div>
 
@@ -210,7 +218,9 @@
             </div>
             
         </div>
+
     </div>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://mysqljs.com/mysql.js" type="text/javascript"></script>
@@ -284,7 +294,7 @@ function loadUser() {
         function(data) {
             console.log(data);
 
-            document.getElementById('welcome-user-heading').innerHTML = 'Welcome back ' + data['Result'][0].menteeName + '!!!';
+            document.getElementById('welcome-user-heading').innerHTML = 'Welcome ' + data['Result'][0].menteeName + '!';
             
             // Setting checkbox labels to specific task for skill
             var tnum1 = data['Result'][0].task1;
