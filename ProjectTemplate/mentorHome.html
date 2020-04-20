@@ -203,12 +203,12 @@
         </div>
         <div class="row">
             <div class="col-6 menteeProgress">
-                <p>Mentee Name 1</p>
+                <p id="name1">No Mentee Found</p>
                 <label for="progressBar">Mentee Progress:</label>
                 <progress id="progressBar" value="50" max="100"></progress>
             </div>
             <div class="col-6 menteeProgress">
-                <p>Mentee Name 2</p>
+                <p id="name2">No Mentee Found</p>
                 <label for="progressBar2">Mentee Progress:</label>
                 <progress id="progressBar2" value="30" max="100"></progress>
             </div>
@@ -252,8 +252,6 @@ function onload() {
     var sqlStmt = "SELECT * FROM CompletedTasks ";
     var whrStmt = "WHERE MentorEmail = '" + String(globalU) + "';"
     sqlStmt = sqlStmt + whrStmt;
-    console.log()
-
 
     MySql.Execute(
         "107.180.1.16",
@@ -280,11 +278,56 @@ function onload() {
                 var textnode = document.createTextNode(output);
                 node.appendChild(textnode);
                 document.getElementById("recentActivities").appendChild(node);
-                
+            }
+        }
+    );
+
+}
+
+
+function findMentee(id){
+    var sqlStmt = "SELECT menteeName FROM Mentees ";
+    var whrStmt = "Where mentorID = '" + String(id) + "';"
+    var sqlStmt = sqlStmt + whrStmt;
+    MySql.Execute(
+        "107.180.1.16",
+        "group7-2",
+        "!!Group7",
+        "group7-2",
+        sqlStmt,
+        function (data) {
+            for (x=0; x < data['Result'].length; x++){
+                var info = data['Result'][x];
+                var mentee = info['menteeName'];
+                if ( x == 0){
+                    document.getElementById("name1").innerHTML = mentee;
+                 }else if(x == 1){
+                    document.getElementById("name2").innerHTML = mentee;
+                }
             }
         }
     );
 }
+
+function getMentorID(){
+    var sqlStmt = "SELECT mentorID FROM Mentors ";
+    var whrStmt = "Where mentorEmail = '" + String(globalU) + "';"
+    var sqlStmt = sqlStmt + whrStmt;
+    MySql.Execute(
+        "107.180.1.16",
+        "group7-2",
+        "!!Group7",
+        "group7-2",
+        sqlStmt,
+        function (data) {
+            var info = data['Result'][0];
+            var mentorID = info['mentorID'];
+            findMentee(mentorID);            
+        }
+    );
+
+}
+getMentorID();
 
 </script>
 </body>

@@ -44,9 +44,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         var globalU = localStorage.getItem('key');
+        var mentorId = 0;
         var sqlStmt = "SELECT * FROM Mentees ";
         var sqlStmt2 = "SELECT * FROM Mentors ";
-        var whereClause = "where menteeEmail = " + "'" + String(globalU) + "'";
+        var whereClause = " WHERE menteeEmail = '" +  globalU + "';";
+        //var sqlStmt3 = "UPDATE Mentees SET mentorID = '" + mentorId + "'"; 
+
+
+        
         //var whereClause2 = "where mentorEmail = " + "'" + String(email) + "'" + " AND mentorPassword = " + "'" + String(pass) + "'";
         //sqlStmt2 = sqlStmt2 + whereClause2;
         sqlStmt = sqlStmt + whereClause;
@@ -94,12 +99,31 @@
                         var email = row.insertCell(1);
                         var skill = row.insertCell(2);
                         row.addEventListener("click",function(d){
-                           console.log(($(this).index()));
+                           mentorId = ($(this).index());
+                           addMentor();
                         });
                         name.innerHTML = mentors[x]['mentorName'];
                         email.innerHTML = mentors[x]['mentorEmail'];
                         skill.innerHTML = mentors[x]['mentorSkill'];
                       }
+                  }               
+            );
+        }
+        function addMentor(){
+        var whereClause4 = " WHERE menteeEmail = '" +  globalU + "';";
+        var sqlStmt3 = "UPDATE Mentees SET mentorID = '" + mentorId + "'"; 
+        sqlStmt3 = sqlStmt3 + whereClause4; 
+
+          MySql.Execute(
+                "107.180.1.16",
+                "group7-2",
+                "!!Group7",
+                "group7-2",
+                sqlStmt3,
+                function (data) {
+                  if (confirm("Would you like to add yourself to this mentor")) {
+                      window.location = "mentee.html"
+                  }else {}
                   }               
             );
         }
