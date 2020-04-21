@@ -182,6 +182,26 @@
             margin-left: 10px;
         }
 
+        #emailSelector{
+            color:black;
+            display:inline-block;
+            float: none;
+            font-size: 2vh;
+            margin-left: 70vw;
+            margin-top: 2vh;
+            
+        }
+        option{
+            color: black;
+        }
+        #sendButton{
+            font-size: 2vh;
+            
+        }
+        #welcome-user-heading{
+            font-size: 1.2vw;
+        }
+
     </style>
 </head>
 <body onload="onload()">
@@ -191,7 +211,13 @@
                 <h1>Mentor2Mentee</h1>
 
                 <h3 id='welcome-user-heading'></h3>
-                <h3 id="signOut"><a href="index.html">Sign Out</a></h3>
+                <!-- <h3 id="signOut"><a href="index.html">Sign Out</a></h3> -->
+                <select id="emailSelector">
+                    <option value="mailto:breynolds@gmail.com">Burt Reynolds</option>
+                    <option value="mailto:billgates@gmail.com">Bill Gates</option>
+                    <option value="mailto:smitha@gmail.com">Adam Smith</option>
+                </select>
+                <a id="sendButton" href="javascript:sendMail()">Send Email to Mentor</a>
 
             </div>
         </div>
@@ -271,6 +297,11 @@ function imageIsLoaded() {
     document.getElementById("profilePicture").width = '250'
     document.getElementById("profilePicture").height = '250'
     // update width and height ...
+}
+function sendMail(){
+    var emailTo = document.getElementById('emailSelector').value;
+
+    window.location.href = "mailto:" + emailTo;
 }
 
 function onload() {

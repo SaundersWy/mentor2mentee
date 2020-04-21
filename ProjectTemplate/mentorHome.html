@@ -14,7 +14,7 @@
             
         }
 
-        body{
+        html, body{
             height: 100%;
             margin: 0;
         }
@@ -185,6 +185,22 @@
         .lightbg {
             background: rgb(75, 75, 75, 0.65);
         }
+        #backpage {
+            display: inline-block;
+            cursor: pointer;
+            background: #000000;
+            color: #ffffff;
+            border: 0.5px solid darkorange;
+            transition: ease-out .4s;
+            width: 145px;
+            height: 50px;
+            margin: 0;
+            padding: 0;
+            margin-top: 20px;
+            margin-bottom: 25px;
+            margin-left: 10px;
+            font-size: 16pt;
+        }
         
 
     </style>
@@ -195,7 +211,8 @@
             <div class="col-12 header darkbg">
                 <h1>Mentor2Mentee</h1>
                 <h3 id="welcomeMentor"></h3>
-                <h3 id="signOut"><a href="index.html">Sign Out</a></h3>
+                <button id="backpage" style="float:left" onclick='window.location.href="./index.html"'>Log Out</button>
+                <!-- <h3 id="signOut"><a href="index.html">Sign Out</a></h3> -->
                 <select id="emailSelector">
                     <option value="mailto:breynolds@gmail.com">Burt Reynolds</option>
                     <option value="mailto:billgates@gmail.com">Bill Gates</option>
