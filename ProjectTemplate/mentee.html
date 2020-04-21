@@ -301,6 +301,8 @@ function loadUser() {
     var check4 = document.getElementById('tcheck4');
     var check5 = document.getElementById('tcheck5');
     var totalChecks = [check1, check2, check3, check4, check5];
+
+    console.log(queryStmt);
     
 
     MySql.Execute(
@@ -310,9 +312,8 @@ function loadUser() {
         "group7-2",
         queryStmt,
         function(data) {
-            console.log(data);
 
-            document.getElementById('welcome-user-heading').innerHTML = 'Welcome ' + data['Result'][0].menteeName + '!';
+            document.getElementById('welcome-user-heading').innerHTML = 'Welcome ' + data['Result'][0]['menteeName'] + '!';
             
             // Setting checkbox labels to specific task for skill
             var tnum1 = data['Result'][0].task1;
@@ -325,7 +326,7 @@ function loadUser() {
 
             console.log(tnums);
 
-            if (data['Result'][0].menteeSkill == 'Marketing') {
+            if (data['Result'][0]['menteeSkill'] == 'Marketing') {
                 console.log('Marketing Major');
 
                 tasknum1.innerHTML = 'Use data to make decisions'
@@ -336,7 +337,7 @@ function loadUser() {
 
             }
 
-            else if (data['Result'][0].menteeSkill == 'Economics') {
+            else if (data['Result'][0]['menteeSkill'] == 'Economics') {
                 console.log('Economics Major');
 
                 tasknum1.innerHTML = 'Be able to interpret and forecast market trends'
@@ -347,7 +348,7 @@ function loadUser() {
 
             }
 
-            else if (data['Result'][0].menteeSkill == 'Information Systems') {
+            else if (data['Result'][0]['menteeSkill'] == 'Information Systems') {
                 console.log('CIS Major');
 
                 tasknum1.innerHTML = 'Be able to write multiple coding languages'
@@ -398,9 +399,12 @@ function checkOff(tcheckID, tasknum) {
             console.log('Updated')
 
             var getUser = "SELECT * FROM Mentees "
-            var join = "JOIN Mentors on Mentors.mentorID = Mentees.menteeID "
+            var join = "JOIN Mentors on Mentors.mentorID = Mentees.mentorID "
             var whereClaus = "WHERE menteeEmail = '" + gUser + "';";
             var finalStmt = getUser + join + whereClaus
+
+            console.log(finalStmt)
+            console.log(gUser);
 
             MySql.Execute(
                 "107.180.1.16",
@@ -411,13 +415,13 @@ function checkOff(tcheckID, tasknum) {
                 function (data) {
                     console.log(data);
 
-                    var insertMenteeName = data['Result'][0].menteeName;
-                    var insertMentorEmail = data['Result'][0].mentorEmail;
+                    var insertMenteeName = data['Result'][0]['menteeName'];
+                    var insertMentorEmail = data['Result'][0]['mentorEmail'];
                     var insertTaskNum = 'task' + tasknum;
                     var insertTask = document.getElementById(insertTaskNum).innerHTML;
 
                     var insertStmt = 'INSERT INTO CompletedTasks (Date, Time, Name, MentorEmail, Description) Values ';
-                    var insertValues = "(CURRENT_DATE(), CURRENT_TIME(), '" + insertMenteeName + "', '" + insertMentorEmail + "', 'Completed Task: " + insertTask + "');";
+                    var insertValues = "(CURRENT_DATE(), CURRENT_TIME(), '" + insertMenteeName + "', '" + insertMentorEmail + "', 'Completed Task (" + tasknum + "): " + insertTask + "');";
                     finalStmt = insertStmt + insertValues;
                     console.log(finalStmt);
 
@@ -469,7 +473,7 @@ function checkOff(tcheckID, tasknum) {
             console.log('Updated')
 
             var getUser = "SELECT * FROM Mentees "
-            var join = "JOIN Mentors on Mentors.mentorID = Mentees.menteeID "
+            var join = "JOIN Mentors on Mentors.mentorID = Mentees.mentorID "
             var whereClaus = "WHERE menteeEmail = '" + gUser + "';";
             var finalStmt = getUser + join + whereClaus
 
@@ -483,8 +487,8 @@ function checkOff(tcheckID, tasknum) {
                 function (data) {
                     console.log(data);
 
-                    var insertMenteeName = data['Result'][0].menteeName;
-                    var insertMentorEmail = data['Result'][0].mentorEmail;
+                    var insertMenteeName = data['Result'][0]['menteeName'];
+                    var insertMentorEmail = data['Result'][0]['mentorEmail'];
 
                     var deleteStmt = 'DELETE FROM CompletedTasks WHERE ';
                     var deleteValues = "Name = '" + insertMenteeName + "' AND MentorEmail = '" + insertMentorEmail + "' AND DESCRIPTION LIKE ('%" + tasknum + "%');";
