@@ -342,6 +342,9 @@ function findMentee(id){
                             if (counter >= width) {
                                 clearInterval(id);
                                 i = 0;
+                                if (confirm("Would you like to Promote " + mentee)) {
+                                promote(mentee);
+                                }else {}
                             } else {
                                 counter++;
                                 elem.style.width = counter + "%";
@@ -365,6 +368,9 @@ function findMentee(id){
                             if (counter >= width) {
                                 clearInterval(id);
                                 i = 0;
+                                if (confirm("Would you like to Promote " + mentee)) {
+                                promote(mentee);
+                                }else {}
                             } else {
                                 counter++;
                                 elem.style.width = counter + "%";
@@ -397,6 +403,66 @@ function getMentorID(){
         }
     );
 
+}
+function promote(mentee){
+    var sqlStmt = "SELECT menteeName, menteeEmail, menteePassword, menteeSkill, menteeStartDate FROM Mentees ";
+    var whrStmt = "Where menteeName = '" + String(mentee) + "';"
+    var sqlStmt = sqlStmt + whrStmt;
+    MySql.Execute(
+        "107.180.1.16",
+        "group7-2",
+        "!!Group7",
+        "group7-2",
+        sqlStmt,
+        function (data) {
+            var info = data['Result'][0];
+            var name = info['menteeName'];
+            var email = info['menteeEmail'];
+            var password = info['menteePassword'];
+            var skill = info['menteeSkill'];
+            insert(name, email, password, skill); 
+        }
+        );
+}
+
+function insert(name, email, password, skill){
+        var sqlStmt = "INSERT INTO Mentors (mentorName, mentorEmail, mentorPassword, mentorSkill, mentorStartDate) VALUES ";
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        var date = yyyy + '-' + mm + '-' + dd;
+        
+        userValues = "('" + name + "', '" + email + "', '" + password + "', '" + skill + "', '" + date + "');";
+        
+        sqlStmt = sqlStmt + userValues;
+        console.log(sqlStmt); 
+        MySql.Execute(
+            "107.180.1.16",
+            "group7-2",
+            "!!Group7",
+            "group7-2",
+            sqlStmt,
+            function (data) {
+                del(name);
+                }
+            );
+
+}
+
+function del(mentee){
+    var sqlStmt = "DELETE FROM Mentees WHERE menteeName = "
+    var where = "'" + mentee + "';"
+    var sqlStmt = sqlStmt + where
+    MySql.Execute(
+            "107.180.1.16",
+            "group7-2",
+            "!!Group7",
+            "group7-2",
+            sqlStmt,
+            function (data, error) {
+                window.location = "mentorHome.html" 
+            });
 }
 getMentorID();
 
