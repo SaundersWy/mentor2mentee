@@ -359,16 +359,17 @@ function findMentee(id){
                             if (counter >= width) {
                                 clearInterval(id);
                                 i = 0;
-                                if (confirm("Would you like to Promote " + mentee)) {
-                                promote(mentee);
-                                }else {}
                             } else {
                                 counter++;
                                 elem.style.width = counter + "%";
                                 elem.innerHTML = counter  + "%";
                             }
-                        }
                     }
+                    if(width == 100){
+                                if (confirm("Would you like to Promote " + mentee)) {
+                                promote(mentee);
+                                }else {}
+                        }
                     
                  }else if(x == 1){
                     document.getElementById("name2").innerHTML = mentee;
@@ -385,20 +386,24 @@ function findMentee(id){
                             if (counter >= width) {
                                 clearInterval(id);
                                 i = 0;
-                                if (confirm("Would you like to Promote " + mentee)) {
-                                promote(mentee);
-                                }else {}
                             } else {
                                 counter++;
                                 elem.style.width = counter + "%";
                                 elem.innerHTML = counter  + "%";
                             }
-                        }
                     }
+                    if(width == 100){
+                                if (confirm("Would you like to Promote " + mentee)) {
+                                promote(mentee);
+                                }else {}
+                        }
                 }
             }
         }
-    );
+    } 
+    } 
+);
+
 }
 
 function getMentorID(){
